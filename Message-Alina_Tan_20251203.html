@@ -110,7 +110,6 @@
        loop>
 </audio>
 
-
 <h1>给陈诗诗的一段心声</h1>
 
 <div id="typewriter" class="typewriter"></div>
@@ -123,7 +122,6 @@
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.22;
 
-  // Start music only when button is clicked
   function startMusic() {
     if (bgm.paused) {
       bgm.play().catch(err => console.log("Autoplay blocked:", err));
@@ -155,7 +153,7 @@
   }
 
   function startChineseMessage() {
-    startMusic();  // <-- GUARANTEED audio start with user gesture
+    startMusic();
 
     const message =
 `亲爱的陈诗诗（Alina），
@@ -174,7 +172,7 @@
 
 希望你喜欢这段讯息，
 也希望你能感受到，
-我是真心在意你的，陈诗诗。I Love You`;
+我是真心在意你的，陈诗诗。I Love You。`;
 
     speakAndWriteChinese(message);
   }
