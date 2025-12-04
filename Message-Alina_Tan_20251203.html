@@ -104,7 +104,12 @@
 
 <body>
 
-<audio id="bgm" src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/A_A_Aalto/Little_Pieces/A_A_Aalto_-_03_-_Dreaming_of_Flying.mp3" loop preload="auto"></audio>
+<audio id="bgm" 
+       src="https://cdn.pixabay.com/audio/2024/02/13/audio_651519c5f2.mp3" 
+       preload="auto" 
+       loop>
+</audio>
+
 
 <h1>给陈诗诗的一段心声</h1>
 
@@ -117,9 +122,13 @@
 <script>
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.22;
-  document.addEventListener("click", () => {
-    if (bgm.paused) bgm.play();
-  }, { once: true });
+
+  // Start music only when button is clicked
+  function startMusic() {
+    if (bgm.paused) {
+      bgm.play().catch(err => console.log("Autoplay blocked:", err));
+    }
+  }
 
   function typeWriter(text, speed = 55) {
     const el = document.getElementById("typewriter");
@@ -133,30 +142,21 @@
         setTimeout(typing, speed);
       }
     }
-
     typing();
   }
 
-  async function playVoice(text, lang = "zh-CN") {
-    const res = await fetch("https://YOUR_BACKEND_URL/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, lang })
-    });
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    const audio = new Audio(url);
-    audio.play();
+  function playVoice() {
+    console.log("Boss: TTS disabled for this personal message.");
   }
 
   function speakAndWriteChinese(text) {
     typeWriter(text, 55);
-    playVoice(text, "zh-CN");
+    playVoice();
   }
 
   function startChineseMessage() {
+    startMusic();  // <-- GUARANTEED audio start with user gesture
+
     const message =
 `亲爱的陈诗诗（Alina），
 我想把这一段心里话，
