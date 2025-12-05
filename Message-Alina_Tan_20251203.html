@@ -100,20 +100,21 @@
 
 <body>
 
-<!-- ✔ WORKING AUDIO SOURCE -->
-<audio id="bgm" 
-       src="https://raw.githubusercontent.com/naptha/talkify/master/sounds/music/soft-piano.mp3"
+<!-- IMPORTANT: Host this MP3 inside your GitHub repo for CORS safety -->
+<!-- Example: assets/music/bgm.mp3 -->
+<audio id="bgm"
+       src="assets/music/bgm.mp3"
        preload="auto"
-       loop>
+       loop
+       playsinline
+       muted>
 </audio>
-
-
 
 <h1>给陈诗诗的一段心声</h1>
 
 <div id="typewriter" class="typewriter"></div>
 
-<button class="btn" onclick="startChineseMessage()">播放讯息</button>
+<button class="btn" id="playBtn">播放讯息</button>
 
 <footer>这不是讯息，而是一份心意。</footer>
 
@@ -121,9 +122,20 @@
   const bgm = document.getElementById("bgm");
   bgm.volume = 0.22;
 
-  function startMusic() {
-    bgm.play().catch(err => console.log("Playback blocked:", err));
+  const playBtn = document.getElementById("playBtn");
+
+  function unlockAndPlay() {
+    if (bgm.paused) {
+      bgm.muted = false; 
+      bgm.play().catch(err => console.log("Playback blocked:", err));
+    }
+
+    startChineseMessage();
+    playBtn.disabled = true;
+    playBtn.innerText = "讯息播放中...";
   }
+
+  playBtn.addEventListener("click", unlockAndPlay);
 
   function typeWriter(text, speed = 55) {
     const el = document.getElementById("typewriter");
@@ -141,8 +153,6 @@
   }
 
   function startChineseMessage() {
-    startMusic();
-
     const message =
 `亲爱的陈诗诗（Alina），
 我想把这一段心里话，
