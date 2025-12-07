@@ -100,16 +100,6 @@
 
 <body>
 
-<!-- IMPORTANT: Host this MP3 inside your GitHub repo for CORS safety -->
-<!-- Example: assets/music/bgm.mp3 -->
-<audio id="bgm"
-       src="assets/music/bgm.mp3"
-       preload="auto"
-       loop
-       playsinline
-       muted>
-</audio>
-
 <h1>给陈诗诗的一段心声</h1>
 
 <div id="typewriter" class="typewriter"></div>
@@ -119,23 +109,7 @@
 <footer>这不是讯息，而是一份心意。</footer>
 
 <script>
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.22;
-
   const playBtn = document.getElementById("playBtn");
-
-  function unlockAndPlay() {
-    if (bgm.paused) {
-      bgm.muted = false; 
-      bgm.play().catch(err => console.log("Playback blocked:", err));
-    }
-
-    startChineseMessage();
-    playBtn.disabled = true;
-    playBtn.innerText = "讯息播放中...";
-  }
-
-  playBtn.addEventListener("click", unlockAndPlay);
 
   function typeWriter(text, speed = 55) {
     const el = document.getElementById("typewriter");
@@ -152,7 +126,16 @@
     typing();
   }
 
-  function startChineseMessage() {
+  function speakText(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "zh-CN";
+    utterance.rate = 0.95;
+    utterance.pitch = 1.1;
+    speechSynthesis.cancel(); 
+    speechSynthesis.speak(utterance);
+  }
+
+  function startMessage() {
     const message =
 `亲爱的陈诗诗（Alina），
 我想把这一段心里话，
@@ -170,10 +153,16 @@
 
 希望你喜欢这段讯息，
 也希望你能感受到，
-我是真心在意你的，陈诗诗。I Love You。`;
+我是真心在意你的，陈诗诗。我爱你。`;
 
     typeWriter(message, 55);
+    speakText(message);
+
+    playBtn.disabled = true;
+    playBtn.innerText = "讯息播放中...";
   }
+
+  playBtn.addEventListener("click", startMessage);
 
   function createParticles() {
     for (let i = 0; i < 30; i++) {
