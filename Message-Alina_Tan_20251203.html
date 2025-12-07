@@ -129,7 +129,7 @@
  function speakText(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "zh-CN";
-    utterance.rate = 0.99; // smoother, slower voice
+    utterance.rate = 0.92; // smoother, slower voice
     utterance.pitch = 1.1;
     speechSynthesis.cancel(); 
     speechSynthesis.speak(utterance);
@@ -155,7 +155,7 @@ function startMessage() {
 也希望你能感受到，
 我是真心在意你的，陈诗诗。我爱你。`;
 
-    typeWriter(message, 420); // SLOWER WRITE SPEED
+    typeWriter(message, 380); // SLOWER WRITE SPEED
     speakText(message);
 
     playBtn.disabled = true;
