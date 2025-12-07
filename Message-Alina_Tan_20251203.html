@@ -129,7 +129,7 @@
  function speakText(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "zh-CN";
-    utterance.rate = 0.98; // smoother, slower voice
+    utterance.rate = 0.82; // smoother, slower voice
     utterance.pitch = 1.1;
     speechSynthesis.cancel(); 
     speechSynthesis.speak(utterance);
