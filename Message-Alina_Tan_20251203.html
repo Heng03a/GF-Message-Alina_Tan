@@ -126,16 +126,16 @@
     typing();
   }
 
-  function speakText(text) {
+ function speakText(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "zh-CN";
-    utterance.rate = 0.95;
+    utterance.rate = 0.88; // smoother, slower voice
     utterance.pitch = 1.1;
     speechSynthesis.cancel(); 
     speechSynthesis.speak(utterance);
-  }
+}
 
-  function startMessage() {
+function startMessage() {
     const message =
 `亲爱的陈诗诗（Alina），
 我想把这一段心里话，
@@ -155,12 +155,12 @@
 也希望你能感受到，
 我是真心在意你的，陈诗诗。我爱你。`;
 
-    typeWriter(message, 55);
+    typeWriter(message, 180); // SLOWER WRITE SPEED
     speakText(message);
 
     playBtn.disabled = true;
     playBtn.innerText = "讯息播放中...";
-  }
+}
 
   playBtn.addEventListener("click", startMessage);
 
